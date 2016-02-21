@@ -7,11 +7,14 @@
     <meta name="author" content=" FILL ME IN ">
     <title>Cameron Pittman: Portfolio</title>
 
-    <!-- Hmm, what is the impact of web fonts on speed? Measure it... -->
-   
-  
+    <!-- https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery --> 
     <link href="css/style.css" rel="stylesheet">
+    <style>
+      body { background: #fff; }
+      header, footer, .container { max-width: 45em; margin: 0 auto; }
+    </style>
     <link href="css/print.css" rel="stylesheet" media="print">
+  
     <script>
       var WebFontConfig = {
         google: {
@@ -25,6 +28,9 @@
         s.parentNode.insertBefore(wf, s);
       })(document);
     </script>
+  
+    <style>
+    </style>
   </head>
 
   <body>
@@ -71,7 +77,18 @@
     </footer>
 
   </body>
-
+  <script>
+      var cb = function() {
+        var l = document.createElement('link'); l.rel = 'stylesheet';
+        l.href = 'css/style.css';
+        var h = document.getElementsByTagName('head')[0]; h.parentNode.insertBefore(l, h);
+      };
+      var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+          webkitRequestAnimationFrame || msRequestAnimationFrame;
+      if (raf) raf(cb);
+      else window.addEventListener('load', cb);
+  </script>
+  
   <script>
     (function(w,g){w['GoogleAnalyticsObject']=g;
     w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)};w[g].l=1*new Date();})(window,'ga');

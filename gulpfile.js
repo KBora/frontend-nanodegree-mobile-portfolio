@@ -4,8 +4,9 @@ var imageResize = require('gulp-image-resize');
 var rename = require('gulp-rename');
 var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
+var uglify = require('gulp-uglify');
 
-gulp.task('default', ['copy-html', 'copy-css', 'copy-img', 'generate-thumbnail'], function() {
+gulp.task('default', ['copy-html', 'copy-css', 'copy-js', 'copy-img', 'generate-thumbnail'], function() {
   // place code for your default task here
 	browserSync.init({
 		server: './dist'
@@ -21,6 +22,12 @@ gulp.task('copy-html', function() {
 gulp.task('copy-css', function() {
 	gulp.src('./src/css/*.css' )
 		.pipe(gulp.dest('./dist/css'));
+});
+
+gulp.task('copy-js', function() {
+	gulp.src('./src/js/*.js' )
+		.pipe(uglify())
+		.pipe(gulp.dest('./dist/js'));
 });
 
 gulp.task('copy-img', function() {
