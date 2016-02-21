@@ -12,6 +12,12 @@ body {
   background: black;
 }
 
+.wf-active header, 
+.wf-active container, 
+.wf-active content,  {
+  font-family: 'Open Sans';
+}
+
 input {
   background: grey;
   font-size: 18px;
