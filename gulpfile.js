@@ -8,7 +8,7 @@ var uglify = require('gulp-uglify');
 
 gulp.task('default', [
 	'copy-html','copy-css', 'copy-js', 'copy-img', 'generate-pizza-thumbnail', 
-	'copy-pizza-html', 'copy-pizza-css', 'copy-pizza-js', 'copy-pizza-img'], function() {
+	'copy-pizza-html', 'copy-pizza-css', 'copy-pizza-js', 'copy-pizza-img', 'generate-pizza-medium'], function() {
 	// place code for your default task here
 		browserSync.init({
 			server: './dist'
@@ -68,12 +68,26 @@ gulp.task('copy-pizza-css', function() {
 
 gulp.task('copy-pizza-js', function() {
 	gulp.src('./src/views/js/*.js' )
-		//.pipe(uglify())
+		.pipe(uglify())
 		.pipe(gulp.dest('./dist/views/js'));
 });
 
 gulp.task('copy-pizza-img', function() {
 	gulp.src('./src/views/images/*' )
+		.pipe(imagemin({
+			progressive: true,
+			svgoPlugins: [{removeViewBox: false}],
+			use: [pngquant()]
+		}))
+		.pipe(gulp.dest('./dist/views/images'));
+});
+
+gulp.task('generate-pizza-medium', function() {
+	gulp.src('./src/views/images/pizzeria.jpg')
+		.pipe(rename('pizzeria-medium.jpg'))
+		.pipe(imageResize({
+			width : 600
+		}))
 		.pipe(imagemin({
 			progressive: true,
 			svgoPlugins: [{removeViewBox: false}],
