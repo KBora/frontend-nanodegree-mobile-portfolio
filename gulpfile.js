@@ -68,7 +68,7 @@ gulp.task('copy-pizza-css', function() {
 
 gulp.task('copy-pizza-js', function() {
 	gulp.src('./src/views/js/*.js' )
-		.pipe(uglify())
+		//.pipe(uglify())
 		.pipe(gulp.dest('./dist/views/js'));
 });
 
