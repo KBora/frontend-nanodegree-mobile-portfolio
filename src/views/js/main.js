@@ -420,6 +420,7 @@ var resizePizzas = function(size) {
 
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
+    var newWidth = 100;
     switch(size) {
       case '1':
         newWidth = 25;
@@ -436,8 +437,9 @@ var resizePizzas = function(size) {
 
     // Replace querySelectorAll with getElementsByClassName
     var randomPizzas = document.getElementsByClassName('randomPizzaContainer');
-
-    for (var i = 0; i < randomPizzas.length; i++) {
+    // Declare length outside of for loop
+    var randomPizzasLength = randomPizzas.length;
+    for (var i = 0; i < randomPizzasLength; i++) {
       randomPizzas[i].style.width = newWidth + '%';
     }
   }
@@ -454,9 +456,9 @@ var resizePizzas = function(size) {
 window.performance.mark('mark_start_generating'); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
+var pizzasDiv = document.getElementById('randomPizzas'); // this was inside the loop but didn't need to be
 for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById('randomPizzas');
-  pizzasDiv.appendChild(pizzaElementGenerator(i));
+    pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
 // User Timing API again. These measurements tell you how long it took to generate the initial pizzas
@@ -491,7 +493,8 @@ function updatePositions() {
   // Determine the bodyScrollTop variable outside the loop to avoid forced synchronous layout 
   var bodyScrollTop = document.body.scrollTop / 1250;
   var phase;
-  for (var i = 0; i < items.length; i++) {
+  var itemsLength = items.length; // moved this out from the for statement 
+  for (var i = 0; i < itemsLength; i++) {
     phase = Math.sin(bodyScrollTop + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
@@ -517,15 +520,17 @@ document.addEventListener('DOMContentLoaded', function() {
   var s = 256; // this is the space between the rows 
   var rows = Math.ceil(screenHeight / s);
   var noOfPizzas = rows * cols;
+  var elem;  // moved this out of the loop
+  var movingPizzas = document.getElementById('movingPizzas1'); // moved this out of the loop and using getElementById instead of querySelector
   for (var i = 0; i < noOfPizzas; i++) {
-    var elem = document.createElement('img');
+    elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = 'images/pizza.png';
     elem.style.height = '100px';
     elem.style.width = '73.333px';
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector('#movingPizzas1').appendChild(elem);
+    movingPizzas.appendChild(elem);
   }
   updatePositions();
 });

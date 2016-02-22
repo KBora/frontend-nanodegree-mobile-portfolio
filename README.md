@@ -22,3 +22,4 @@ frontend-nanodegree-mobile-portfolio
   Other optimsations or suggestions based on feedback from the first review:
   * Replace document.querySelector with document.getElementById 
   * Replace document.querySelectorAll with document.getElementsByClassName
+  * Moved variables or counters outside of loops if they did not need to be inside the loop (line 451, 441, 496, 523, 524)
