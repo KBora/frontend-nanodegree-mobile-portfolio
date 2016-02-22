@@ -398,16 +398,17 @@ var resizePizzas = function(size) {
   window.performance.mark('mark_start_resize');   // User Timing API function
 
   // Changes the value for the size of the pizza above the slider
+  // Replaced document.querySelector with document.getElementById 
   function changeSliderLabel(size) {
     switch(size) {
       case '1':
-        document.querySelector('#pizzaSize').innerHTML = 'Small';
+        document.getElementById('pizzaSize').innerHTML = 'Small';
         return;
       case '2':
-        document.querySelector('#pizzaSize').innerHTML = 'Medium';
+        document.getElementById('pizzaSize').innerHTML = 'Medium';
         return;
       case '3':
-        document.querySelector('#pizzaSize').innerHTML = 'Large';
+        document.getElementById('pizzaSize').innerHTML = 'Large';
         return;
       default:
         console.log('bug in changeSliderLabel');
@@ -420,23 +421,24 @@ var resizePizzas = function(size) {
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
     switch(size) {
-      case "1":
+      case '1':
         newWidth = 25;
         break;
-      case "2":
+      case '2':
         newWidth = 33.3;
         break;
-      case "3":
+      case '3':
         newWidth = 50;
         break;
       default:
-        console.log("bug in sizeSwitcher");
+        console.log('bug in sizeSwitcher');
     }
 
-    var randomPizzas = document.querySelectorAll(".randomPizzaContainer");
+    // Replace querySelectorAll with getElementsByClassName
+    var randomPizzas = document.getElementsByClassName('randomPizzaContainer');
 
     for (var i = 0; i < randomPizzas.length; i++) {
-      randomPizzas[i].style.width = newWidth + "%";
+      randomPizzas[i].style.width = newWidth + '%';
     }
   }
 
@@ -486,8 +488,7 @@ function updatePositions() {
   window.performance.mark('mark_start_frame');
 
   var items = document.querySelectorAll('.mover');
-  // The following line was inside the loop but is now outside for efficiency 
-  // Retrieving scrollTop then changing the style creates forced synchronous layout 
+  // Determine the bodyScrollTop variable outside the loop to avoid forced synchronous layout 
   var bodyScrollTop = document.body.scrollTop / 1250;
   var phase;
   for (var i = 0; i < items.length; i++) {
@@ -510,9 +511,13 @@ window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
+  // show less than 200 pizzas based on how many rows can fit on the screen
+  var screenHeight = window.screen.height;
   var cols = 8;
-  var s = 256;
-  for (var i = 0; i < 200; i++) {
+  var s = 256; // this is the space between the rows 
+  var rows = Math.ceil(screenHeight / s);
+  var noOfPizzas = rows * cols;
+  for (var i = 0; i < noOfPizzas; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = 'images/pizza.png';

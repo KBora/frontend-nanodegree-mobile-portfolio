@@ -15,5 +15,10 @@ frontend-nanodegree-mobile-portfolio
   * Optimize css by inlining all of styles.css
 
 3. For the pizza page, the following optimisations were carried out:
-  * In the updatePositions function, determine the bodyScrollTop variable outside the loop.  Retrieving the .scrollTop property and then changing the style creates forced synchronous layout, which is repeated each loop.
+  * In the updatePositions function, determine the bodyScrollTop variable outside the loop.  Previously, inside the loop, the .scrollTop property was retrieved and then a style change applied, which creates a forced synchronous layout.
+  * Reduce the number of background pizzas elements that are created, based on screen height. Previously a 200 were created but not all of these are necessary as they are never shown. 
   * (Based on Cameron Pittman's solution) In the changePizzaSizes function, resize the pizzas using fixed percentages rather than changing the width based on the calculating the existing width of the every pizza element
+
+  Other optimsations or suggestions based on feedback from the first review:
+  * Replace document.querySelector with document.getElementById 
+  * Replace document.querySelectorAll with document.getElementsByClassName
