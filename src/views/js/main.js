@@ -486,8 +486,12 @@ function updatePositions() {
   window.performance.mark('mark_start_frame');
 
   var items = document.querySelectorAll('.mover');
-  var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+  // The following line was inside the loop but is now outside for efficiency 
+  // Retrieving scrollTop then changing the style creates forced synchronous layout 
+  var bodyScrollTop = document.body.scrollTop / 1250;
+  var phase;
   for (var i = 0; i < items.length; i++) {
+    phase = Math.sin(bodyScrollTop + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
 

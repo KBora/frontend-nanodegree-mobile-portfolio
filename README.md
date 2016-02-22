@@ -15,5 +15,5 @@ frontend-nanodegree-mobile-portfolio
   * Optimize css by inlining all of styles.css
 
 3. For the pizza page, the following optimisations were carried out:
-  * In the updatePositions function, move the line that declares and calculates the phase variable outside of the loop.
+  * In the updatePositions function, determine the bodyScrollTop variable outside the loop.  Retrieving the .scrollTop property and then changing the style creates forced synchronous layout, which is repeated each loop.
   * (Based on Cameron Pittman's solution) In the changePizzaSizes function, resize the pizzas using fixed percentages rather than changing the width based on the calculating the existing width of the every pizza element
